@@ -32,7 +32,7 @@ def _make_managed_connection_class(base):
             return s
 
         def connect_to(self, address):
-            self.host, self.port = address
+            self.host, port = address  # don't set non ssl port that gets advertised from sentinel.discover_master()
             super(_SentinelManagedConnection, self).connect()
             if self.connection_pool.check_connection:
                 self.send_command('PING')
